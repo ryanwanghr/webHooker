@@ -7,8 +7,6 @@ class DraggablePopup {
     this.currentY = 0;
     this.initialX = 0;
     this.initialY = 0;
-    this.xOffset = 0;
-    this.yOffset = 0;
     this.clipboardMonitor = null;
     this.lastClipboardContent = "";
     this.isMonitoring = false;
@@ -67,15 +65,22 @@ class DraggablePopup {
   }
 
   dragStart(e) {
-    this.initialX = e.clientX - this.xOffset;
-    this.initialY = e.clientY - this.yOffset;
+    // Get the current position of the popup
+    const rect = this.popup.getBoundingClientRect();
 
-    if (
-      e.target === this.popup.querySelector(".popup-header") ||
-      e.target === this.popup.querySelector(".popup-title")
-    ) {
-      this.isDragging = true;
-      this.popup.classList.add("dragging");
+    // Calculate the offset from the mouse position to the popup's top-left corner
+    this.initialX = e.clientX - rect.left;
+    this.initialY = e.clientY - rect.top;
+
+    // Check if the click is on the header or its children (including the title)
+    const header = this.popup.querySelector(".popup-header");
+    if (header && (e.target === header || header.contains(e.target))) {
+      // Make sure it's not the close button
+      const closeButton = this.popup.querySelector(".popup-close");
+      if (e.target !== closeButton) {
+        this.isDragging = true;
+        this.popup.classList.add("dragging");
+      }
     }
   }
 
@@ -83,19 +88,17 @@ class DraggablePopup {
     if (this.isDragging) {
       e.preventDefault();
 
+      // Calculate new position based on mouse position minus the initial offset
       this.currentX = e.clientX - this.initialX;
       this.currentY = e.clientY - this.initialY;
 
-      this.xOffset = this.currentX;
-      this.yOffset = this.currentY;
-
-      this.setTranslate(this.currentX, this.currentY);
+      // Update popup position directly using setProperty with !important
+      this.popup.style.setProperty("left", this.currentX + "px", "important");
+      this.popup.style.setProperty("top", this.currentY + "px", "important");
     }
   }
 
   dragEnd(e) {
-    this.initialX = this.currentX;
-    this.initialY = this.currentY;
     this.isDragging = false;
 
     if (this.popup) {
@@ -103,18 +106,10 @@ class DraggablePopup {
     }
   }
 
-  setTranslate(xPos, yPos) {
-    if (this.popup) {
-      this.popup.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    }
-  }
-
   setPosition(x, y) {
     if (this.popup) {
-      this.popup.style.left = x + "px";
-      this.popup.style.top = y + "px";
-      this.xOffset = 0;
-      this.yOffset = 0;
+      this.popup.style.setProperty("left", x + "px", "important");
+      this.popup.style.setProperty("top", y + "px", "important");
     }
   }
 
