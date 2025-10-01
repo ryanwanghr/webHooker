@@ -27,7 +27,9 @@ class DraggablePopup {
                 <button class="popup-close" title="Close">&times;</button>
             </div>
             <div class="popup-content">
-                <p class="hello-text">${this.escapeHtml(clipboardContent)}</p>
+                <p class="hello-text">${this.escapeHtml(
+                  this.removeWhitespaces(clipboardContent)
+                )}</p>
             </div>
         `;
 
@@ -132,6 +134,11 @@ class DraggablePopup {
     return div.innerHTML;
   }
 
+  removeWhitespaces(text) {
+    // Remove all whitespace characters (spaces, tabs, newlines, etc.)
+    return text.replace(/\s/g, "");
+  }
+
   async startClipboardMonitoring() {
     if (this.isMonitoring) return;
 
@@ -139,7 +146,8 @@ class DraggablePopup {
 
     // Try to get initial clipboard content
     try {
-      this.lastClipboardContent = await navigator.clipboard.readText();
+      const rawClipboard = await navigator.clipboard.readText();
+      this.lastClipboardContent = this.removeWhitespaces(rawClipboard);
     } catch (error) {
       console.log("Could not read initial clipboard content:", error);
       this.lastClipboardContent = "";
@@ -153,7 +161,8 @@ class DraggablePopup {
       }
 
       try {
-        const currentClipboard = await navigator.clipboard.readText();
+        const rawClipboard = await navigator.clipboard.readText();
+        const currentClipboard = this.removeWhitespaces(rawClipboard);
 
         // Check if clipboard content has changed
         if (currentClipboard !== this.lastClipboardContent) {
@@ -185,9 +194,10 @@ class DraggablePopup {
       contentElement.style.transition = "opacity 0.2s ease";
 
       setTimeout(() => {
-        contentElement.innerHTML = this.escapeHtml(
-          newContent || "Clipboard is empty"
-        );
+        const processedContent = newContent
+          ? this.removeWhitespaces(newContent)
+          : "Clipboard is empty";
+        contentElement.innerHTML = this.escapeHtml(processedContent);
         contentElement.style.opacity = "1";
       }, 100);
     }
