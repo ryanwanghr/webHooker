@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Live Clipboard Monitor",
+  "version": "1.1",
+  "description": "Chrome extension that creates a draggable popup panel that automatically updates with clipboard content in real-time",
+  "permissions": ["activeTab", "clipboardRead"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Click to show draggable popup"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["draggable-popup.html", "draggable-popup.js", "styles.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

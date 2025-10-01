@@ -1,0 +1,110 @@
+/* CSS styles for the draggable popup */
+.draggable-hello-popup {
+  position: fixed !important;
+  top: 100px !important;
+  left: 100px !important;
+  width: 400px !important;
+  min-height: 200px !important;
+  max-height: 500px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: 2px solid #fff !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  z-index: 10000 !important;
+  cursor: move !important;
+  display: flex !important;
+  flex-direction: column !important;
+  font-family: "Arial", sans-serif !important;
+  color: white !important;
+  overflow: hidden !important;
+}
+
+.draggable-hello-popup .popup-header {
+  background: rgba(0, 0, 0, 0.2) !important;
+  padding: 10px 15px !important;
+  cursor: move !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  position: relative !important;
+}
+
+.draggable-hello-popup .popup-header::after {
+  content: "●" !important;
+  color: #4caf50 !important;
+  font-size: 12px !important;
+  margin-left: 8px !important;
+  animation: pulse 2s infinite !important;
+}
+
+.draggable-hello-popup .popup-title {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  margin: 0 !important;
+}
+
+.draggable-hello-popup .popup-close {
+  background: none !important;
+  border: none !important;
+  color: white !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  width: 25px !important;
+  height: 25px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  transition: background-color 0.2s !important;
+}
+
+.draggable-hello-popup .popup-close:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.draggable-hello-popup .popup-content {
+  flex: 1 !important;
+  padding: 20px !important;
+  overflow-y: auto !important;
+  word-wrap: break-word !important;
+  text-align: left !important;
+}
+
+.draggable-hello-popup .hello-text {
+  font-size: 16px !important;
+  font-weight: normal !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+}
+
+.draggable-hello-popup.dragging {
+  opacity: 0.8 !important;
+  transform: scale(1.02) !important;
+  transition: none !important;
+}
+
+/* Prevent text selection while dragging */
+.draggable-hello-popup * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Animation for live monitoring indicator */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
