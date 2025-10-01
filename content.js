@@ -202,11 +202,26 @@ class DraggablePopup {
 // Initialize the draggable popup manager
 let draggablePopup = new DraggablePopup();
 
-// Listen for messages from popup.js
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "createDraggablePopup") {
-    draggablePopup.create(request.clipboardContent);
-    sendResponse({ status: "Popup created successfully" });
+// Listen for messages from background script
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+  if (request.action === "toggleDraggablePopup") {
+    // Toggle popup visibility
+    if (draggablePopup.popup && draggablePopup.popup.parentNode) {
+      // Popup exists, remove it
+      draggablePopup.remove();
+      sendResponse({ status: "Popup removed" });
+    } else {
+      // Popup doesn't exist, create it
+      try {
+        const clipboardText = await navigator.clipboard.readText();
+        draggablePopup.create(clipboardText || "Clipboard is empty");
+        sendResponse({ status: "Popup created" });
+      } catch (error) {
+        console.log("Could not read clipboard:", error);
+        draggablePopup.create("Unable to access clipboard");
+        sendResponse({ status: "Popup created without clipboard access" });
+      }
+    }
   }
 });
 

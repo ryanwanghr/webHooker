@@ -5,8 +5,10 @@
   "description": "Chrome extension that creates a draggable popup panel that automatically updates with clipboard content in real-time",
   "permissions": ["activeTab", "clipboardRead"],
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Click to show draggable popup"
+    "default_title": "Toggle clipboard monitor popup"
+  },
+  "background": {
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -17,7 +19,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["draggable-popup.html", "draggable-popup.js", "styles.css"],
+      "resources": ["styles.css"],
       "matches": ["<all_urls>"]
     }
   ]

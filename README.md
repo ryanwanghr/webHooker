@@ -1,15 +1,17 @@
-# Draggable Hello World Chrome Extension
+# Live Clipboard Monitor Chrome Extension
 
-A simple Chrome extension that creates a beautiful, draggable popup panel displaying "Hello World!" on any webpage.
+A Chrome extension that creates a beautiful, draggable popup panel that automatically monitors and displays your clipboard content in real-time.
 
 ## Features
 
 - ✨ Beautiful gradient popup with modern design
 - 🖱️ Fully draggable by clicking and dragging the header
+- 📋 Real-time clipboard monitoring and display
+- 🔄 Toggle popup visibility by clicking the extension icon
 - 🎯 Works on any website
-- 🔄 Easy to close with the X button
 - 📱 Responsive and smooth animations
 - 🎨 CSS-styled with hover effects
+- 🚀 One-click activation - no intermediate popup needed
 
 ## Installation
 
@@ -28,35 +30,29 @@ A simple Chrome extension that creates a beautiful, draggable popup panel displa
 
 3. **Pin the Extension (Optional):**
    - Click the puzzle piece icon in the Chrome toolbar
-   - Find "Draggable Hello World Popup" and click the pin icon
+   - Find "Live Clipboard Monitor" and click the pin icon
 
 ## Usage
 
 1. **Navigate to any webpage** (e.g., google.com, github.com, etc.)
 
-2. **Click the extension icon** in your Chrome toolbar
+2. **Click the extension icon** in your Chrome toolbar to **toggle the popup**
 
+   - First click: Creates a draggable popup showing your current clipboard content
+   - Second click: Removes the popup
    - The icon should appear as a puzzle piece or in your pinned extensions
 
-3. **Click "Create Draggable Popup"** in the extension popup
+3. **Interact with the popup:**
 
-   - A beautiful "Hello World!" popup will appear on the page
-
-4. **Drag the popup around:**
-
-   - Click and hold the header area (where it says "Draggable Popup")
-   - Drag to move the popup anywhere on the page
-   - Release to drop it in the new position
-
-5. **Close the popup:**
-   - Click the "×" button in the top-right corner of the popup
+   - **Real-time clipboard monitoring:** The popup automatically updates when your clipboard changes
+   - **Drag the popup around:** Click and hold the header area to move it anywhere on the page
+   - **Manual close:** Click the "×" button in the top-right corner of the popup
 
 ## File Structure
 
 ```
 ├── manifest.json          # Extension configuration
-├── popup.html             # Extension popup interface
-├── popup.js              # Extension popup logic
+├── background.js          # Background script for extension icon handling
 ├── content.js            # Main draggable popup functionality
 ├── styles.css            # Popup styling
 └── README.md             # This file
